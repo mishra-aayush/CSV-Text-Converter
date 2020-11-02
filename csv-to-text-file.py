@@ -3,31 +3,68 @@ import csv
 # Taking the input of the csv file
 name = input('Enter the name of the csv file with extension: ')
 
-# Naming text file
-textFileName = name[:-4] + '.txt'
+# Checking if the file is a csv or txt file
+if name[-4:] == '.txt':
+    FileName = name[:-4] + '.csv'
 
-# Reading the csv file
-try: 
-    with open(name, 'r') as csvfile:
+    # Reading the text file
+    try: 
+        textFile = open(name, 'r')
 
-        # Creating a csv reader object 
-        csvreader = csv.reader(csvfile) 
+        # Read lines from text file
+        totalLines = textFile.readlines()
 
-        # Creating/Opening text file
-        textFile = open(textFileName, 'w')
+        # Creating/Opening csv file
+        with open(FileName, 'w') as csvfile:
 
-        # Adding csv data to text file 
-        for row in csvreader:
-            for data in row:
-                textFile.write(data + '\t\t\t')
-            textFile.write('\n')
+            csv_writer = csv.writer(csvfile)
+
+            for line in totalLines:
+                # Write in csv file
+                csv_writer.writerow(line.split())
+            
+        #Close csv file
+        csvfile.close()
+        
+        # Close the text file
         textFile.close()
 
-    # Closing the csv file
-    csvfile.close()
+    except:
+        print('Could not open ' + name + ' file')
+        exit() 
 
-except:
-    print('Could not open ' + name + ' file')
-    exit()
+    print(FileName + ' generated')     
 
-print(textFileName + ' generated')
+elif name[-4:] == '.csv':
+    FileName = name[:-4] + '.txt'
+
+    # Reading the csv file
+    try: 
+        with open(name, 'r') as csvfile:
+
+            # Creating a csv reader object 
+            csvreader = csv.reader(csvfile) 
+
+            # Creating/Opening text file
+            textFile = open(FileName, 'w')
+
+            # Adding csv data to text file 
+            for row in csvreader:
+                for data in row:
+                    textFile.write(data + '\t')
+                textFile.write('\n')
+            
+            # Closing the text file
+            textFile.close()
+
+        # Closing the csv file
+        csvfile.close()
+
+    except:
+        print('Could not open ' + name + ' file')
+        exit()
+
+    print(FileName + ' generated')
+
+else:
+    print('Invalid file type entered')
