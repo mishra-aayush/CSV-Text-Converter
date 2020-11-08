@@ -1,3 +1,12 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sun Oct 30 13:57:12 2020
+
+Converts a csv file to a text file and a text file to a csv file
+
+@author: AAYUSH MISHRA
+"""
+
 import csv
 
 # Taking the input of the csv file
